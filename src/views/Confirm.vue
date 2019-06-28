@@ -12,24 +12,24 @@ export default {
     }
   },
   created () {
-    this.confirmAction();
+    this.confirmAction()
   },
   methods: {
     confirmAction: function () {
       if (!this.$route.query.transactionId){
-        throw new Error("Transaction Id not found.");
+        throw new Error("Transaction Id not found.")
       }
 
       // Retrieve the reservation from database.
-      let reservation = JSON.parse(sessionStorage.getItem(this.$route.query.transactionId));
+      var reservation = JSON.parse(sessionStorage.getItem(this.$route.query.transactionId))
       if (!reservation){
-          throw new Error("Reservation not found.");
+          throw new Error("Reservation not found.")
       }
 
-      var params = new URLSearchParams();
-      params.set('type', 'confirm');
-      params.set('transactionId', this.$route.query.transactionId);
-      params.set('reservations', JSON.stringify(reservation));
+      var params = new URLSearchParams()
+      params.set('type', 'confirm')
+      params.set('transactionId', this.$route.query.transactionId)
+      params.set('reservations', JSON.stringify(reservation))
 
       axios.post(process.env.VUE_APP_LINE_PAY_BASE_URL + '/.netlify/functions/pay', params)
         .then(response => {
